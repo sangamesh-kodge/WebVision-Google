@@ -1,5 +1,6 @@
 ### Download files
 wget https://data.vision.ee.ethz.ch/cvl/webvision/google_resized_256.tar
+wget https://data.vision.ee.ethz.ch/cvl/webvision/flickr_resized_256.tar
 wget https://data.vision.ee.ethz.ch/cvl/webvision/val_images_256.tar
 wget https://data.vision.ee.ethz.ch/cvl/webvision/info.tar
 
@@ -7,11 +8,13 @@ wget https://data.vision.ee.ethz.ch/cvl/webvision/info.tar
 mkdir ./train
 mkdir ./val
 mv ./google_resized_256.tar ./train/
+mv ./flickr_resized_256.tar ./train/
 mv ./val_images_256.tar ./val/
 
 ### Move and uncompress the train files
 cd ./train
 tar -xf google_resized_256.tar
+tar -xf flickr_resized_256.tar
 cd ../
 
 ### Move and uncompress the val files
@@ -37,7 +40,7 @@ do
     img_folder_name=${line:6}
     mkdir -p $path_folder/$img_folder_name
     mv $path_folder/google/$web_folder_name/* $path_folder/$img_folder_name/
-    rm -rf $path_folder/$web_folder_name
+    mv $path_folder/flickr/$web_folder_name/* $path_folder/$img_folder_name/    
 done < "$input"
 
 ### Copy val images to respective folder
@@ -61,13 +64,15 @@ echo "----------------------------------------------------------------"
 echo "Removing Redundant files."
 echo "----------------------------------------------------------------"
 rm -rf ./info.tar 
+rm -rf info/
 rm -rf ./val/val_images_256.tar 
 rm -r val/val_images_256/
 rm -rf ./train/google_resized_256.tar
-rm -r train/google/
-
+rm -rf train/google/
+rm -rf ./train/flickr_resized_256.tar
+rm -rf train/flickr/
 
 
 echo "----------------------------------------------------------------"
-echo "Google Partition for WebVision Dataset 1.0 Processed!"
+echo "WebVision Dataset 1.0 Processed!"
 echo "----------------------------------------------------------------"
