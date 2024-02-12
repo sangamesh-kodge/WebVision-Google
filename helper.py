@@ -1,8 +1,7 @@
-# read a text file as dict. First column is key, second column is value
-import json
+
 from collections import OrderedDict
 
-# read the file to a dictionary. First column is the key, second column is the value
+# Reading synsets.txt to obtain (ImageNet Class Names). read the file to a dictionary. First column is the key, second column is the value
 imagenet_names = OrderedDict()
 with open('./info/synsets.txt', 'r') as f:
     for line in f:
@@ -14,7 +13,7 @@ with open('./info/synsets.txt', 'r') as f:
 Imagenet_keys = list(imagenet_names.keys())
 
 
-# read the file to a dictionary. First column is the key, second column is the value
+# Reading queries_synsets_map.txt (WebVision Folder Mapping). Read the file to a dictionary. First column is the key, second column is the value
 folder_class = OrderedDict()
 with open('./info/queries_synsets_map.txt', 'r') as f:
     for line in f:
@@ -22,8 +21,7 @@ with open('./info/queries_synsets_map.txt', 'r') as f:
         key, value = line.split(' ')
         folder_class[key] = value
 
-# create a dictionary. The key is the folder name, value is the class name.
-# The folder names are in format q0001 to q9983, but we need to add the q to make it correct.
+# Creating imagenet_folder_name.txt
 web_img = dict()
 for folder, class_number in folder_class.items():
     if int(folder)<10:
@@ -35,14 +33,14 @@ for folder, class_number in folder_class.items():
     else:
         folder_name = f"q{folder}"
     web_img[folder_name] = Imagenet_keys[int(class_number)-1]
-
-# Save web_img dict as txt file    
+  
 with open('./info/imagenet_folder_name.txt', 'w') as f:
+    #  Writes the web_img dictionary to the file
     for key, value in web_img.items():
         f.write(f"{key} {value}\n")
 
 
-# read the file to a dictionary. First column is the key, second column is the value
+# Reading val_filelist.txt (Validation Image Mapping). read the file to a dictionary. First column is the key, second column is the value
 val_list = OrderedDict()
 with open('./info/val_filelist.txt', 'r') as f:
     for line in f:
@@ -50,12 +48,13 @@ with open('./info/val_filelist.txt', 'r') as f:
         key, value = line.split(' ')
         val_list[key] = value
 
-# create a dictionary. The key is the val file name, value is the class name.
+# Creating val_imagenet_class.txt.
 val_img_class = dict()
 for key, value in val_list.items():
     val_img_class[key] = Imagenet_keys[int(value)]
-# Save val_img_class dict as txt file
+
 with open('./info/val_imagenet_class.txt', 'w') as f:
+    # Writes the val_img_class dictionary to the file
     for key, value in val_img_class.items():
         f.write(f"{key} {value}\n")
 

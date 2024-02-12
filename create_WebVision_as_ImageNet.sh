@@ -1,12 +1,15 @@
 ### Download files
+# Download necessary tar files from the WebVision dataset
 wget https://data.vision.ee.ethz.ch/cvl/webvision/google_resized_256.tar
 wget https://data.vision.ee.ethz.ch/cvl/webvision/flickr_resized_256.tar
 wget https://data.vision.ee.ethz.ch/cvl/webvision/val_images_256.tar
 wget https://data.vision.ee.ethz.ch/cvl/webvision/info.tar
 
 ### Make directory and move tar files
+# Create 'train' and 'val' directories to hold training and validation data
 mkdir ./train
 mkdir ./val
+# Move the downloaded tar files into the 'train' and 'val' directories
 mv ./google_resized_256.tar ./train/
 mv ./flickr_resized_256.tar ./train/
 mv ./val_images_256.tar ./val/
@@ -25,7 +28,7 @@ cd ..
 ### Move and uncompress the info files
 tar -xf info.tar
 
-### Make imagenet_folder_name
+### Make helper files using helper.py python file.
 python helper.py
 
 ### Copy train images to respective folder
@@ -59,7 +62,7 @@ done < "$input"
 
 
 
-# remove files 
+# remove files - cleanup process
 echo "----------------------------------------------------------------"
 echo "Removing Redundant files."
 echo "----------------------------------------------------------------"
